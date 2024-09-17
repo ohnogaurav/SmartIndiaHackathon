@@ -16,7 +16,7 @@ To use the app, you'll need Python 3 and the required libraries:
 
     ```bash
     git clone https://github.com/ohnogaurav/SmartIndiaHackathon.git
-    cd SmartIndiaHackathon/MealMinder/Python Code
+    cd SmartIndiaHackathon/MealMinder/PythonCode
     ```
 
 2. Install the required libraries:
