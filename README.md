@@ -1,3 +1,5 @@
+## WORK IS ON HALT
+
 # MealMinder
 
 MealMinder is a Python-based application designed to track food wastage by scanning plates and imposing fines on users based on the amount of leftover food detected. The app automates the process of identifying food waste, analyzing the plate, and fining users accordingly.
