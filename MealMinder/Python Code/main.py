@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-# Open the camera (Irium Webcam)
+# Open the camera (Irium Webcam or system webcam)
 cap = cv2.VideoCapture(0)  # Change index if needed
 
 if not cap.isOpened():
