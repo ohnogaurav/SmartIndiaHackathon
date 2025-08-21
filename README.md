@@ -97,13 +97,6 @@ Response example:
 - **Frontend:** HTML, CSS (Jinja2 templating)
 - **Others:** Werkzeug for uploads, REST-style JSON API
 
----
-
-## 📌 Future Improvements
-- Fine-tune YOLO model on food datasets for better accuracy
-- Add user authentication & history of uploads
-- Deploy on cloud (Heroku/AWS/GCP) with Docker
-- Add real-time video support
 
 ---
 
