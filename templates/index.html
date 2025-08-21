@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plate Monitor – CV Demo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Plate Monitor 🍽️</h1>
+    <p>Upload a plate image. The app will detect food & plate, estimate coverage, and assign a status & fine.</p>
+
+    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" class="card">
+      <input type="file" name="file" accept=".png,.jpg,.jpeg" required>
+      <button type="submit">Analyze</button>
+    </form>
+
+    {% if result %}
+      <div class="result card">
+        <h2>Result</h2>
+        <ul>
+          <li><strong>Status:</strong> {{ result.status }}</li>
+          <li><strong>Fine:</strong> ₹ {{ result.fine }}</li>
+          <li><strong>Coverage:</strong> {{ result.coverage_percent }}%</li>
+          {% if result.detected_items %}
+            <li><strong>Detected Items:</strong>
+              <ul>
+                {% for item in result.detected_items %}
+                  <li>{{ item.label }} ({{ item.conf }})</li>
+                {% endfor %}
+              </ul>
+            </li>
+          {% endif %}
+        </ul>
+        <div class="image-wrap">
+          <img src="{{ result.output_image_url }}" alt="Processed output">
+        </div>
+      </div>
+    {% endif %}
+
+    <footer>
+      <p>Built with Flask + YOLOv8</p>
+    </footer>
+  </div>
+</body>
+</html>

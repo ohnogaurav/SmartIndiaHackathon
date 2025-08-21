@@ -1,79 +1,68 @@
-## !!-------WORK IS ON HALT DUE TO TIME CONSTRAINTS-------!!
 
-# MealMinder
+# Plate Monitor (Flask + OpenCV)
 
-MealMinder is a Python-based application designed to track food wastage by scanning plates and imposing fines on users based on the amount of leftover food detected. The app automates the process of identifying food waste, analyzing the plate, and fining users accordingly.
+A simple, intermediate-level web app that estimates plate coverage from an uploaded image.
+It demonstrates a clean Flask backend, a minimal HTML/CSS frontend, and classic CV logic.
 
 ## Features
+- Upload an image (JPG/PNG) via web UI
+- Backend runs OpenCV-based analysis (HSV threshold + contours)
+- Returns status (empty / nearly empty / quarter / half / three-quarter / full), fine, and coverage %
+- Saves and displays a processed image with overlays in `static/outputs/`
 
-- **Plate Scanning:** Automatically detects food items left on a plate using a camera and advanced image processing techniques.
-- **Fining System:** Implements an automated fine system based on the amount of food left unconsumed.
-- **Data Logging:** Logs the results of each scan, including the amount of waste detected and the fines applied.
+## Tech Stack
+- Backend: Flask (Python)
+- CV: OpenCV + NumPy (traditional image processing)
+- Frontend: Jinja2 templating + minimal CSS
 
-## Installation
+## Project Structure
+```
+plate-monitor/
+├── app.py
+├── plate_detection.py
+├── templates/
+│   └── index.html
+├── static/
+│   ├── style.css
+│   └── outputs/
+├── uploads/
+├── requirements.txt
+└── README.md
+```
 
-To use the app, you'll need Python 3 and the required libraries:
+## Setup & Run (Local)
+1. **Create venv & install deps**
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # Windows: .venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+2. **Run the server**
+   ```bash
+   python app.py
+   ```
+3. **Open in browser**
+   - Navigate to: http://localhost:5000
+   - Upload a `.jpg` or `.png` image of a plate
 
-1. Clone this repository:
+## API (JSON)
+You can also call the API directly and get JSON by sending `Accept: application/json`:
+```bash
+curl -H "Accept: application/json" -F "file=@examples/plate.jpg" http://localhost:5000/upload
+```
+Response:
+```json
+{
+  "status": "Plate is half full",
+  "fine": 35,
+  "coverage_percent": 48.23,
+  "output_image_url": "/static/outputs/processed_1712345678_plate.jpg"
+}
+```
 
-    ```bash
-    git clone https://github.com/ohnogaurav/SmartIndiaHackathon.git
-    cd SmartIndiaHackathon/MealMinder/PythonCode
-    ```
-
-2. Install the required libraries:
-
-    ```bash
-    pip install opencv-python numpy
-    ```
-
-## Usage
-
-### Scanning Plates
-
-1. Set up your camera to capture images of plates:
-
-    ```bash
-    python MealMinder.py scan
-    ```
-
-2. The app will process the image and detect leftover food. Based on the detected amount, it will calculate and display the fine.
-
-### Data Logging
-
-1. Results are saved automatically after each scan in a log file, which contains information such as the plate ID, timestamp, and fine amount.
-
-## Handling Errors
-
-The app includes error handling for:
-
-- Missing or incorrect image files.
-- Issues with the camera or image processing.
-- Invalid input for fines or scanning processes.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Author
-
-Gaurav
-
-## Script Overview
-
-The `MealMinder.py` script handles both the scanning of plates and the fining process based on leftover food detection.
-
-### Script Workflow
-
-- **Plate Scanning:**
-  - Captures an image of the plate using a connected camera.
-  - Processes the image to detect leftover food and calculates the amount of waste.
-  
-- **Fining System:**
-  - Based on the waste detected, it automatically applies a fine.
-  - Logs all fines and scan results in a structured log file.
-
-## Additional Information
-
-- Make sure to run the app in an environment where the required libraries can access your camera.
-- The app is designed for use in food-serving environments, such as hostels or cafeterias, and may require adjustments based on specific setups or camera hardware.
+## Notes
+- Thresholds in `plate_detection.py` are tweakable.
+- This is an **intermediate** codebase—clean and easy to extend:
+  - Add YOLO detection for plate localization
+  - Add DB + history endpoint
+  - Add JWT auth for private APIs
