@@ -60,9 +60,4 @@ Response:
 }
 ```
 
-## Notes
-- Thresholds in `plate_detection.py` are tweakable.
-- This is an **intermediate** codebase—clean and easy to extend:
-  - Add YOLO detection for plate localization
-  - Add DB + history endpoint
-  - Add JWT auth for private APIs
+
